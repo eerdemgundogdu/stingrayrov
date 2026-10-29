@@ -1,0 +1,10 @@
+** Drc report for stingray-rov-carrier.kicad_pcb **
+** Created on 2026-10-30 00:26:40 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

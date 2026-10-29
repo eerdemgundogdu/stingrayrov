@@ -1,0 +1,60 @@
+# ============================================================
+#  STINGRAY - ROS2 Parametre Dosyası
+#  Hareket Edebilirlik v2
+#
+#  Runtime'da değiştirmek için:
+#    ros2 param set /controller_node depth_kp 500.0
+# ============================================================
+
+serial_bridge_node:
+  ros__parameters:
+    serial_port: "/dev/ttyACM0"
+    serial_baud: 115200
+    serial_timeout: 0.01
+
+sensor_node:
+  ros__parameters:
+    depth_offset_samples: 20
+    depth_offset: 0.0    # 0.0 = otomatik kalibrasyon
+    depth_kf_accel_std: 0.5   # Kalman: modellenmemis dikey ivme (m/s^2)
+    depth_kf_meas_std: 0.02   # Kalman: derinlik sensoru gurultusu (m)
+
+controller_node:
+  ros__parameters:
+    # Derinlik PID kazançları
+    depth_kp: 400.0
+    depth_ki: 30.0
+    depth_kd: 150.0
+    depth_max_output: 350.0
+
+    # Yaw (yönelim) PID kazançları
+    yaw_kp: 3.5
+    yaw_ki: 0.1
+    yaw_kd: 1.2
+    yaw_max_output: 300.0
+
+mission_node:
+  ros__parameters:
+    # Parkur parametreleri
+    dive_depth: 1.0           # Hedef dalış derinliği (metre)
+    leg_duration: 15.0        # Her bacak süresi (saniye)
+    forward_power: 0.35       # İleri hareket güç oranı (0-1)
+    depth_tolerance: 0.08     # Derinlik toleransı (metre)
+    heading_tolerance: 3.0    # Yönelim toleransı (derece)
+
+safety_node:
+  ros__parameters:
+    # Güvenlik limitleri
+    leak_threshold: 500       # Sızıntı ADC eşik değeri
+    battery_low: 21.0         # Düşük batarya uyarısı (Volt)
+    battery_critical: 19.8    # Kritik batarya (Volt)
+    max_depth: 3.0            # Maksimum derinlik limiti (metre)
+    comm_timeout: 0.5         # Haberleşme timeout (saniye)
+
+vision_node:
+  ros__parameters:
+    red_boost: 1.45           # Su alti kirmizi kanal zayiflama telafisi
+    blue_atten: 0.90          # Mavi kanal dengesi
+    gate_width_m: 1.50        # TEKNOFEST kapi ic acikligi (metre)
+    focal_px: 520.0           # Kalibre edilmis su alti kamera odak uzakligi (px)
+    min_contour_area: 180     # Minimum kontur alani (px^2)

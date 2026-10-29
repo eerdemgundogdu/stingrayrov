@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+build/
+calib_images/
+camera_calib.json
+.pio/
+install/
+log/
+
+# KiCad
+*-backups/
+*.kicad_prl
+fp-info-cache
+*.lck
+hardware/stingray-rov-carrier/placement.kicad_pcb
+hardware/stingray-rov-carrier/routed.kicad_pcb
+hardware/output/gerber/
+hardware/output/_render/

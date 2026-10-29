@@ -1,0 +1,60 @@
+name: checks
+on: [push, pull_request]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Syntax check
+        run: python -m compileall -q .
+      - name: Install test deps
+        run: pip install numpy
+      - name: Serial protocol test (no ROS)
+        run: python jetson/test/test_protocol.py
+      - name: Depth Kalman filter test
+        run: python jetson/test/test_depth_filter.py
+      - name: Underwater 6-state EKF navigation test
+        run: python jetson/test/test_ekf_navigation.py
+      - name: Underwater vision pipeline & gate detection test
+        run: python jetson/test/test_vision.py
+      - name: PID & 6-thruster matrix controller test
+        run: python jetson/test/test_controller.py
+
+  firmware-host-tests:
+    # Arduino'dan bagimsiz firmware modulleri (cerceve kodlayici, CRC, parser, slew limiter)
+    # host'ta -Werror ve ASan/UBSan ile test edilir.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S teensy/test -B build/test
+      - name: Build
+        run: cmake --build build/test
+      - name: Test
+        run: ctest --test-dir build/test --output-on-failure
+
+  firmware-build:
+    # Teensy 4.1 icin tum firmware varyantlarini (elle kablolama + Rev A tasiyici kart) derler.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env: [freertos, superloop, freertos_carrier, superloop_carrier]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ runner.os }}-${{ hashFiles('teensy/platformio.ini') }}
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Build ${{ matrix.env }}
+        working-directory: teensy
+        run: pio run -e ${{ matrix.env }}
