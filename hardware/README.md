@@ -2,6 +2,16 @@
 
 Teensy 4.1 tabanli 6 iticili ROV icin 2 katmanli (110x85 mm, FR-4, 1.6 mm, 1 oz bakir) tasiyici PCB tasarimi.
 
+| Ust yuz | Izometrik |
+| --- | --- |
+| ![Ust yuz](images/carrier-top.png) | ![Izometrik](images/carrier-iso.png) |
+
+| Alt yuz (GND dokumu) | Bakir + silkscreen yerlesimi |
+| --- | --- |
+| ![Alt yuz](images/carrier-bottom.png) | ![Yerlesim](images/carrier-layout.svg) |
+
+Gorseller KiCad 9 3B goruntuleyicisinden (`kicad-cli pcb render`) uretilmistir; Teensy 4.1 soketi icin 3B model olmadigindan sadece header pedleri gorunur.
+
 Kartin cozdugu temel elektriksel noktalar:
 
 - 6S Li-Po (22.2 V nominal, 25.2 V tam dolu) girisinde 1 A sigorta (`F1`), SS16 ters polarite diyodu (`D1`), SMBJ30CA TVS (`D2`) ve 47 uF giris kondansatoru (`C1`).

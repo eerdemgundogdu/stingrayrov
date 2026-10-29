@@ -32,6 +32,8 @@ Surucu ve sinyal isleme detaylari:
 
 ## Tasiyici Kart (`hardware/`)
 
+![Stingray tasiyici kart (KiCad 3B render)](hardware/images/carrier-iso.png)
+
 Teensy 4.1 ve su alti sensor/ESC baglantilari icin 2 katmanli KiCad PCB tasarimi (Rev A, 110x85 mm):
 
 - 6S Li-Po giris korumasi (`F1` 1 A sigorta, `D1` SS16 ters polarite diyodu, `D2` SMBJ30CA TVS, `C1` 47 uF).
